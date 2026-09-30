@@ -1,5 +1,7 @@
 import { chapters } from '@/content/profile';
+import { ChapterWatcher } from './ChapterWatcher';
 import { CompanyLogo } from './CompanyLogo';
+import { CountUp } from './CountUp';
 import { Tags } from './Tags';
 
 export function Experience() {
@@ -65,7 +67,7 @@ export function Experience() {
                 id={e.id}
                 className="entry reveal -mx-5 flex flex-col gap-3 rounded-3xl px-5 py-4 sm:-mx-8 sm:px-8 sm:py-7"
               >
-                {e.big && <span className="text-6xl font-bold leading-[0.95] tracking-[-0.04em] sm:text-[88px]">{e.big}</span>}
+                {e.big && <CountUp value={e.big} className="text-6xl font-bold leading-[0.95] tracking-[-0.04em] sm:text-[88px]" />}
                 <h4 className="text-2xl font-semibold tracking-[-0.015em] sm:text-[28px]">{e.title}</h4>
                 <p className="max-w-[40em] text-[17px] leading-relaxed text-pretty text-muted sm:text-[19px]">{e.body}</p>
               </article>
@@ -73,7 +75,7 @@ export function Experience() {
           </div>
         </section>
       ))}
-
+      <ChapterWatcher />
     </section>
   );
 }

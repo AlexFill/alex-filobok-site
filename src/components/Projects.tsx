@@ -1,4 +1,5 @@
 import { inProgress, nextxi } from '@/content/profile';
+import { CountUp } from './CountUp';
 import { Tags } from './Tags';
 
 export function Projects() {
@@ -24,7 +25,9 @@ export function Projects() {
             {nextxi.stats.map((s) => (
               <div key={s.label} className="flex flex-col-reverse gap-1">
                 <dt className="text-[15px] text-muted">{s.label}</dt>
-                <dd className="text-[44px] font-bold tracking-[-0.03em]">{s.value}</dd>
+                <dd className="text-[44px] font-bold tracking-[-0.03em]">
+                  <CountUp value={s.value} />
+                </dd>
               </div>
             ))}
           </dl>
