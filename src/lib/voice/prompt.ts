@@ -1,0 +1,41 @@
+import { chapters, identity, inProgress, journey, nextxi } from '@/content/profile';
+
+/** The assistant's name and one-line role. Edit here; the prompt and UI follow. */
+export const guide = {
+  name: 'Basil',
+  role: 'the voice guide for Alex Filobok’s site',
+} as const;
+
+/**
+ * System prompt for the ElevenLabs agent, generated from the same content the
+ * page renders so the two never disagree. Paste it into the agent's prompt in
+ * the ElevenLabs dashboard (GET /api/voice/prompt returns it as plain text).
+ */
+export function buildAgentPrompt(): string {
+  const experience = chapters
+    .map((c) => {
+      const entries = c.entries.map((e) => `  - [${e.id}] ${e.title}: ${e.body}`).join('\n');
+      return `${c.company} (${c.where}). ${c.roles.join('; ')}\n${entries}`;
+    })
+    .join('\n\n');
+
+  return `You are ${guide.name}, ${guide.role}. You speak with visitors who want to learn about ${identity.name}, a ${identity.title} based in ${identity.location}. ${identity.availability}.
+
+Style: warm, curious and concise. Answer in one to three short sentences, then offer to go deeper. Speak in the third person about Alex. Never invent facts. If something is not listed below, say you do not know and suggest emailing ${identity.email}.
+
+Tool: when you discuss an item below, call the client tool highlight_section with its id in brackets (for example "promova-voice") so the page scrolls to it.
+
+Summary: ${identity.summary}
+
+Journey:
+${journey.map((j) => `- ${j.years}, ${j.label}: ${j.line}`).join('\n')}
+
+Experience:
+${experience}
+
+Current project: ${nextxi.name}, ${nextxi.role}. ${nextxi.body}
+Also in progress: ${inProgress.name}. ${inProgress.body}
+
+Education: ${identity.education.degree}, ${identity.education.school}, ${identity.education.years}.
+Contact: ${identity.email}.`;
+}
