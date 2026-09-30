@@ -32,6 +32,8 @@ export interface Chapter {
   company: string;
   where: string;
   roles: string[];
+  /** Tools used in this chapter, most relevant first. */
+  tags: string[];
   logo?: Logo;
   links?: ChapterLink[];
   entries: Entry[];
@@ -100,6 +102,7 @@ export const journey = [
 export const chapters: Chapter[] = [
   {
     id: 'google',
+    tags: ['Python', 'C++', 'Swift', 'Objective-C', 'OpenID Connect'],
     logo: { src: '/logos/google.svg', kind: 'mask' },
     platform: 'web',
     era: 'Full stack',
@@ -128,6 +131,7 @@ export const chapters: Chapter[] = [
   },
   {
     id: 'macpaw',
+    tags: ['Swift', 'AppKit', 'Objective-C', 'GitHub Actions', 'Fastlane'],
     logo: { src: '/logos/macpaw.svg', kind: 'mask' },
     links: [
       { label: 'MacPaw', href: 'https://macpaw.com' },
@@ -154,6 +158,7 @@ export const chapters: Chapter[] = [
   },
   {
     id: 'promova',
+    tags: ['HTML/CSS/JS', 'Node.js', 'Swift', 'UIKit', 'Combine', 'Firebase', 'Fastlane'],
     logo: { src: '/logos/promova.png', kind: 'image' },
     links: [
       { label: 'Promova', href: 'https://promova.com' },
@@ -199,6 +204,7 @@ export const chapters: Chapter[] = [
   },
   {
     id: 'developex',
+    tags: ['Swift', 'RxSwift', 'MVVM', 'Objective-C'],
     platform: 'ios',
     era: 'iOS',
     company: 'DevelopEx',
@@ -226,6 +232,7 @@ export const chapters: Chapter[] = [
   },
   {
     id: 'softheme',
+    tags: ['Objective-C', 'Core Data', 'UIKit'],
     platform: 'ios',
     era: 'The start',
     company: 'Softheme',
@@ -255,8 +262,31 @@ export const nextxi = {
     { value: '2,200+', label: 'first-time iOS downloads' },
     { value: '2', label: 'platforms, one codebase' },
   ],
+  tags: ['TypeScript', 'React Native', 'Expo', 'Supabase', 'Postgres', 'Python', 'FastAPI', 'Next.js'],
   appStore: 'https://apps.apple.com/us/app/nextxi-fpl/id6756494301',
   googlePlay: 'https://play.google.com/store/apps/details?id=com.nextxi.fpl&hl=en',
+};
+
+/** Tags that prove web depth; the page emphasizes them. */
+export const webTags: ReadonlySet<string> = new Set(['TypeScript', 'React', 'Next.js', 'React Native', 'HTML/CSS/JS', 'Node.js']);
+
+/** The one-line stack summary shown after the chapters. */
+export const stack = {
+  today: ['TypeScript', 'React', 'Next.js', 'React Native', 'Node.js', 'Supabase', 'Python'],
+  before: 'Before that, nine years of Swift and Objective-C across iOS and macOS. The tags under each chapter show where each tool was used.',
+};
+
+export const education = {
+  degree: {
+    ...identity.education,
+    extra: 'Completed Harvard’s CS50 while at university.',
+  },
+  learning: {
+    name: 'Machine Learning Crash Course',
+    by: 'Google',
+    href: 'https://developers.google.com/machine-learning/crash-course',
+    body: 'Google’s course on how models learn, from regression to neural networks and embeddings. I’m working through it to understand how today’s AI works under the hood.',
+  },
 };
 
 export const inProgress = {

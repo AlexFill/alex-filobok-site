@@ -30,6 +30,17 @@ describe('profile content', () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 
+  it('tags every chapter, without duplicates', () => {
+    for (const c of profile.chapters) {
+      expect(c.tags.length).toBeGreaterThan(0);
+      expect(new Set(c.tags).size).toBe(c.tags.length);
+    }
+  });
+
+  it('links the course over https', () => {
+    expect(profile.education.learning.href).toMatch(/^https:\/\//);
+  });
+
   it('uses American spelling', () => {
     expect(allText).not.toMatch(/optimis|colour|behaviour|organis/i);
   });
