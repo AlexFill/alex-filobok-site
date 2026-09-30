@@ -4,6 +4,7 @@ import { Experience } from '@/components/Experience';
 import { HeroJourney } from '@/components/HeroJourney';
 import { Nav } from '@/components/Nav';
 import { Projects } from '@/components/Projects';
+import { Stack } from '@/components/Stack';
 import { VoiceOrb } from '@/components/VoiceOrb';
 import { identity, links } from '@/content/profile';
 
@@ -26,6 +27,7 @@ export default function Home() {
       <Nav />
       <main>
         <HeroJourney />
+        <Stack />
         <Experience />
         <Projects />
         <Education />

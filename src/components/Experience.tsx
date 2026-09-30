@@ -1,4 +1,4 @@
-import { chapters, stack } from '@/content/profile';
+import { chapters } from '@/content/profile';
 import { CompanyLogo } from './CompanyLogo';
 import { Tags } from './Tags';
 
@@ -74,13 +74,6 @@ export function Experience() {
         </section>
       ))}
 
-      <div className="reveal mx-auto flex max-w-[1440px] flex-col gap-4 border-t border-line px-5 py-16 sm:px-12 lg:px-[120px] lg:py-20">
-        <span className="text-[15px] text-muted">Stack</span>
-        <p className="max-w-[28em] text-3xl font-semibold leading-tight tracking-[-0.025em] text-balance sm:text-4xl">
-          Today: <span className="text-accent">{stack.today.join(', ')}.</span>
-        </p>
-        <p className="max-w-[40em] text-[17px] leading-relaxed text-muted sm:text-[19px]">{stack.before}</p>
-      </div>
     </section>
   );
 }

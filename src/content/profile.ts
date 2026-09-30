@@ -267,14 +267,12 @@ export const nextxi = {
   googlePlay: 'https://play.google.com/store/apps/details?id=com.nextxi.fpl&hl=en',
 };
 
-/** Tags that prove web depth; the page emphasizes them. */
-export const webTags: ReadonlySet<string> = new Set(['TypeScript', 'React', 'Next.js', 'React Native', 'HTML/CSS/JS', 'Node.js']);
-
-/** The one-line stack summary shown after the chapters. */
-export const stack = {
-  today: ['TypeScript', 'React', 'Next.js', 'React Native', 'Node.js', 'Supabase', 'Python'],
-  before: 'Before that, nine years of Swift and Objective-C across iOS and macOS. The tags under each chapter show where each tool was used.',
-};
+/** The stack shown near the top of the page, grouped the way people scan it. */
+export const stack: { label: string; tools: string[] }[] = [
+  { label: 'Web', tools: ['TypeScript', 'React', 'Next.js', 'Node.js'] },
+  { label: 'Mobile and desktop', tools: ['Swift', 'Objective-C', 'Kotlin', 'React Native'] },
+  { label: 'Backend and systems', tools: ['Go', 'Python', 'C++', 'Supabase', 'Postgres'] },
+];
 
 export const education = {
   degree: {

@@ -36,7 +36,7 @@ ${experience}
 Current project: ${nextxi.name}, ${nextxi.role}. ${nextxi.body} Tools: ${nextxi.tags.join(', ')}.
 Also in progress: ${inProgress.name}. ${inProgress.body}
 
-Stack today: ${stack.today.join(', ')}. ${stack.before}
+Stack: ${stack.map((g) => `${g.label}: ${g.tools.join(', ')}`).join('. ')}.
 
 Education: ${education.degree.degree}, ${education.degree.school}, ${education.degree.years}. ${education.degree.extra}
 Now learning: ${education.learning.name} by ${education.learning.by}. ${education.learning.body}
