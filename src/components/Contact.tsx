@@ -1,19 +1,6 @@
-import Image from 'next/image';
 import { identity, links } from '@/content/profile';
-import portrait from '../../public/alex.jpeg';
 import { Icon } from './Icon';
-
-function Portrait() {
-  return (
-    <Image
-      src={portrait}
-      alt={`Portrait of ${identity.name}`}
-      placeholder="blur"
-      sizes="(min-width: 1024px) 260px, (min-width: 640px) 220px, 160px"
-      className="size-40 shrink-0 rounded-full object-cover object-[50%_35%] sm:size-[220px] lg:size-[260px]"
-    />
-  );
-}
+import { Portrait } from './Portrait';
 
 export function Contact() {
   return (
@@ -23,13 +10,13 @@ export function Contact() {
       className="mx-auto flex max-w-[1440px] scroll-mt-16 flex-col gap-16 px-5 pt-24 pb-12 sm:px-12 lg:px-[120px] lg:pt-32"
     >
       <div className="reveal flex flex-col gap-10 sm:flex-row sm:items-center lg:gap-[72px]">
-        <Portrait />
+        <Portrait sizes="(min-width: 1024px) 260px, (min-width: 640px) 220px, 160px" className="size-40 sm:size-[220px] lg:size-[260px]" />
         <div>
           <h2 id="contact-title" className="sheen text-6xl font-bold leading-[0.95] tracking-[-0.045em] sm:text-[104px]">
             Let’s talk.
           </h2>
           <p className="mt-5 max-w-[32em] text-lg leading-relaxed text-muted sm:text-[21px]">
-            {identity.title} in {identity.location.split(',')[0]}, {identity.availability.toLowerCase()}.
+            {identity.headline} in {identity.location.split(',')[0]}, {identity.availability.toLowerCase()}.
           </p>
           <a
             href={`mailto:${identity.email}`}

@@ -15,7 +15,7 @@ A personal site for Alex Filobok (Full-Stack Product Engineer), kept general rat
 - Read the relevant guide in `node_modules/next/dist/docs/` before using an API. Training data is out of date for this version.
 - Request APIs (`params`, `searchParams`, `cookies()`, `headers()`) are async. Use `proxy`, not `middleware`.
 - Server Components by default. Add `'use client'` only for interactivity, and keep client components small and leaf-level.
-- Use `next/font` for fonts and `next/image` for images. Set `priority` only on the LCP image.
+- Use `next/font` for fonts and `next/image` for images. `priority` is deprecated in Next 16: give only the LCP image (the intro portrait) `loading="eager"` and `fetchPriority="high"`.
 - Env vars: secrets stay server-only and are never prefixed `NEXT_PUBLIC_`. Document every variable in `.env.example`.
 
 ## TypeScript rules
