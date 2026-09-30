@@ -25,7 +25,7 @@ export function Contact() {
       <div className="reveal flex flex-col gap-10 sm:flex-row sm:items-center lg:gap-[72px]">
         <Portrait />
         <div>
-          <h2 id="contact-title" className="text-6xl font-bold leading-[0.95] tracking-[-0.045em] sm:text-[104px]">
+          <h2 id="contact-title" className="sheen text-6xl font-bold leading-[0.95] tracking-[-0.045em] sm:text-[104px]">
             Let’s talk.
           </h2>
           <p className="mt-5 max-w-[32em] text-lg leading-relaxed text-muted sm:text-[21px]">

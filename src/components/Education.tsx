@@ -16,14 +16,14 @@ export function Education() {
       </header>
 
       <div className="grid gap-5 lg:grid-cols-2">
-        <article className="reveal flex flex-col gap-3 rounded-[28px] border border-line p-7 sm:p-10">
+        <article className="spot reveal flex flex-col gap-3 rounded-[28px] border border-line p-7 sm:p-10">
           <span className="font-mono text-sm text-muted">{degree.years}</span>
           <h3 className="text-[26px] font-semibold leading-tight tracking-[-0.015em] sm:text-[32px]">{degree.degree}</h3>
           <p className="text-[17px] leading-relaxed text-muted">{degree.school}, Kyiv.</p>
           <p className="text-[17px] leading-relaxed">{degree.extra}</p>
         </article>
 
-        <article className="reveal flex flex-col items-start gap-3 rounded-[28px] border border-[var(--ring)] bg-[var(--highlight)] p-7 sm:p-10">
+        <article className="spot reveal flex flex-col items-start gap-3 rounded-[28px] border border-[var(--ring)] bg-[var(--highlight)] p-7 sm:p-10">
           <span className="rounded-full border border-line px-3 py-1 font-mono text-xs uppercase tracking-wider text-muted">Now learning</span>
           <h3 className="text-[26px] font-semibold leading-tight tracking-[-0.015em] sm:text-[32px]">
             {learning.name}

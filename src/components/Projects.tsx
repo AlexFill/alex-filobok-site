@@ -15,7 +15,7 @@ export function Projects() {
 
       <article
         id="nextxi"
-        className="entry reveal grid items-center gap-10 rounded-[36px] bg-surface p-7 sm:p-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-16 lg:p-16"
+        className="entry spot reveal grid items-center gap-10 rounded-[36px] bg-surface p-7 sm:p-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-16 lg:p-16"
       >
         <div className="flex flex-col gap-6">
           <span className="text-base text-muted">{nextxi.role}</span>
@@ -35,7 +35,7 @@ export function Projects() {
           <div className="flex flex-wrap gap-4">
             <a
               href={nextxi.appStore}
-              className="flex min-h-12 items-center rounded-full bg-fg px-6 font-semibold text-bg transition-opacity hover:opacity-85"
+              className="btn-glow flex min-h-12 items-center rounded-full bg-fg px-6 font-semibold text-bg"
             >
               View on the App Store
             </a>

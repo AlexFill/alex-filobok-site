@@ -4,6 +4,7 @@ import { Experience } from '@/components/Experience';
 import { HeroJourney } from '@/components/HeroJourney';
 import { Nav } from '@/components/Nav';
 import { Projects } from '@/components/Projects';
+import { SpotlightTracker } from '@/components/SpotlightTracker';
 import { Stack } from '@/components/Stack';
 import { VoiceOrb } from '@/components/VoiceOrb';
 import { identity, links } from '@/content/profile';
@@ -34,6 +35,7 @@ export default function Home() {
       </main>
       <Contact />
       <VoiceOrb />
+      <SpotlightTracker />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd).replace(/</g, '\\u003c') }}
