@@ -2,41 +2,46 @@
 
 The personal site of Alex Filobok, Full-Stack Product Engineer. It tells nine years of work as one scroll:
 a device morphs from a phone to a laptop to a browser as the story moves from iOS to macOS to full stack.
-A voice orb you can drag and dock to any edge of the screen is the entry point to a voice guide
-(coming in v2).
+Basil, a voice guide built on ElevenLabs Agents, answers questions about the work out loud and scrolls to
+whatever you talk about.
 
 ## How it's built
 
-- **Next.js 16** (App Router, fully static), **React 19**, **TypeScript**, **Tailwind CSS 4**, **Vitest**.
-- **No animation library.** The hero morph and the reveals are native CSS scroll-driven animations
-  (`view-timeline`, `animation-timeline: view()`). The morph animates `clip-path` in container units, so it
-  scales with the window and never animates layout. Browsers without support, and anyone with reduced
-  motion turned on, get the final frame.
-- **One source of truth for content:** `src/content/profile.ts`. A test (`profile.test.ts`) guards it against
-  claims that were ruled out and checks that every id is unique and every link is real.
-- **Dockable orb:** `src/components/VoiceOrb.tsx`. Pointer Events drag, snapping to the nearest edge, and tucking
-  in with a spring. The geometry is pure and tested in `src/lib/dock.ts`. It works without a mouse (the arrow keys
-  dock it, Enter opens it), docks only to the bottom corners on phones, and its colour follows the chapter on
-  screen.
-- **Themes:** it follows the OS, and the toggle's choice is applied before first paint (no flash).
+- **Next.js 16** (App Router), **React 19**, strict **TypeScript**, **Tailwind CSS 4**, **Vitest**.
+- **One source of truth for content:** `src/content/profile.ts`. The page and Basil's system prompt are both
+  generated from it. `profile.test.ts` guards it against ruled-out claims and checks ids and links.
+- **Motion:**
+  - The hero journey is a pure, tested timeline (`src/lib/hero/timeline.ts`) driven from scroll by
+    `HeroMotion`, which damps progress so the device glides after the wheel. A pre-paint class shows the
+    phone on first paint; small screens, reduced motion and no-JS get the final frame.
+  - Reveals use CSS scroll-driven animation. Stats count up once (`CountUp`), chapters tint as they pass,
+    and cards carry a cursor spotlight. Everything has a reduced-motion fallback.
+- **Voice guide (Basil):**
+  - `GET /api/voice/session` exchanges the server-only ElevenLabs key for a short-lived signed URL
+    (rate limited). The key never reaches the browser.
+  - Conversation phase lives in a pure reducer (`src/lib/voice/state.ts`); `useVoiceGuide` wraps the
+    ElevenLabs React SDK, feeds the live audio level to the orb, and exposes a `highlight_section` client
+    tool.
+  - The orb is draggable and docks to any edge (`src/lib/dock.ts`, tested). Without a key, a microphone or
+    a network, the panel says so and offers email.
+- **Themes:** follows the OS, with a toggle applied before first paint.
+
+## Setup
 
 ```bash
 npm install
-npm run dev     # http://localhost:3000
-npm test        # content guard + orb geometry
+cp .env.example .env.local   # add ELEVENLABS_API_KEY and ELEVENLABS_AGENT_ID
+npm run dev                  # http://localhost:3000
+```
+
+To configure the agent in the ElevenLabs dashboard, paste the prompt from `GET /api/voice/prompt` and add a
+client tool named `highlight_section` with one string parameter, `id`.
+
+## Checks
+
+```bash
+npm test          # content guard, hero timeline, count-up, voice state, dock geometry
+npx tsc --noEmit
 npm run lint
 npm run build
 ```
-
-## Roadmap: v2, the voice guide
-
-The orb opens a "coming soon" panel today. v2 connects it to an ElevenLabs agent:
-
-- **Talk to my CV:** the agent answers from `profile.ts` and highlights the entry it's talking about (every
-  entry already has an id for this).
-- **Read my CV aloud:** the agent walks through the chapters, scrolling along as it reads.
-- **The career song and the fantasy tale:** pre-generated from the CV, reviewed, and hosted as audio.
-  The mic pauses while music plays.
-
-The server pieces (short-lived conversation tokens, rate limiting, agent-as-code setup) come from
-Captain's Call, my voice assistant for FPL teams, where the same pattern already runs.

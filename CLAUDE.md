@@ -2,7 +2,7 @@
 
 # Project guide
 
-A personal business-card site for Alex Filobok (Full-Stack Product Engineer). Next.js 16 App Router, React 19, Tailwind 4, strict TypeScript, Vitest. The centerpiece is a draggable voice guide built on ElevenLabs Agents.
+A personal site for Alex Filobok (Full-Stack Product Engineer), kept general rather than tuned to one employer. Next.js 16 App Router, React 19, Tailwind 4, strict TypeScript, Vitest. The centerpiece is a draggable voice guide built on ElevenLabs Agents.
 
 ## Commands
 
@@ -33,12 +33,12 @@ A personal business-card site for Alex Filobok (Full-Stack Product Engineer). Ne
 
 ## Design requirements
 
-- Direction: Apple-like. Neutral canvas (`--bg`, `--fg`), one violet accent, the orb is the only saturated element.
+- Direction: Apple-like. Neutral canvas (`--bg`, `--fg`), one violet accent, the orb is the only saturated element. Glow is used sparingly: settled stats, card spotlights, the primary button, the contact sheen and chapter tints.
 - Colors come from the tokens in `src/app/globals.css`. No raw hex in components. The site follows the system theme, with a manual override via `data-theme`.
 - Contrast at least 4.5:1 for text. Every interactive element has a visible `:focus-visible` state and a 44px minimum target.
 - Motion: animate `transform` and `opacity` only. Reveals 500-800 ms with expo-out, hovers 150-250 ms. Pin at most one or two sections. Never parallax body copy.
 - Every animation has a `prefers-reduced-motion` fallback that shows the final state. Nothing waits at `opacity: 0` for JavaScript.
-- Use CSS scroll-driven animation where it works. GSAP ScrollTrigger is approved for pinned scenes that CSS cannot do; register it in one client component and clean up with `gsap.context`.
+- Use CSS scroll-driven animation where it works. The hero is the exception: `HeroMotion` drives the pure timeline in `src/lib/hero/timeline.ts` from damped scroll progress, because CSS scroll timelines cannot ease against the wheel. Keep its loop running only while it catches up, and test timeline changes.
 - Check 375, 768, 1024 and 1440 px wide, in light and dark. No horizontal scroll. No emoji as icons; use the SVGs in `Icon.tsx`.
 
 ## Voice guide rules
@@ -47,3 +47,4 @@ A personal business-card site for Alex Filobok (Full-Stack Product Engineer). Ne
 - Conversation phase lives in the pure reducer `src/lib/voice/state.ts`. The hook (`useVoiceGuide`) translates SDK events into it. Add a reducer test with every new event.
 - Fail softly: with no key, no microphone or no network the panel explains what happened and offers email.
 - Required env: `ELEVENLABS_API_KEY`, `ELEVENLABS_AGENT_ID`. The agent needs a client tool named `highlight_section` with one string parameter, `id`.
+- Basil's name, intro, greeting and example questions live in `profile.ts` (`guide`). Any button can open Basil with `openGuide()` from `src/lib/voice/events.ts`.
