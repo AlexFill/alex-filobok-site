@@ -16,6 +16,7 @@ const personJsonLd = {
   '@type': 'Person',
   name: identity.name,
   jobTitle: identity.title,
+  worksFor: { '@type': 'Organization', name: 'Google' },
   email: `mailto:${identity.email}`,
   url: identity.siteUrl,
   image: `${identity.siteUrl}/alex.jpeg`,

@@ -23,8 +23,8 @@ export default function Image() {
       >
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           <div style={{ fontSize: 88, fontWeight: 700, letterSpacing: -3, lineHeight: 1 }}>{identity.name}</div>
-          <div style={{ fontSize: 40, color: '#a1a1a6' }}>{identity.title}</div>
-          <div style={{ fontSize: 28, color: '#a1a1a6', marginTop: 24 }}>Phone, desktop, web. Nine years of shipping.</div>
+          <div style={{ fontSize: 40, color: '#a1a1a6' }}>{identity.headline}</div>
+          <div style={{ fontSize: 28, color: '#a1a1a6', marginTop: 24 }}>Hi, I’m Alex. Nine years of phone, desktop and web.</div>
         </div>
         <div
           style={{
