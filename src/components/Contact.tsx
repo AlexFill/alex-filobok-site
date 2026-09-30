@@ -56,11 +56,8 @@ export function Contact() {
             </a>
           ))}
         </nav>
-        <div className="flex flex-col gap-2 border-t border-line pt-6 text-sm text-muted sm:flex-row sm:justify-between">
-          <span>© {new Date().getFullYear()} {identity.name}</span>
-          <span>
-            {identity.education.degree}, {identity.education.school}
-          </span>
+        <div className="border-t border-line pt-6 text-sm text-muted">
+          © {new Date().getFullYear()} {identity.name}
         </div>
       </div>
     </footer>
