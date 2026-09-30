@@ -89,10 +89,14 @@ export function useVoiceGuide(levelTarget: RefObject<HTMLElement | null>) {
     const el = levelTarget.current;
     if (!el || !isLive(state.phase)) return;
     let raf = 0;
+    // Two stages of smoothing: the target follows the raw volume, the shown
+    // level follows the target, so the orb swells and settles without flicker.
+    let target = 0;
     let level = 0;
     const tick = () => {
       const raw = state.phase === 'speaking' ? getOutputVolume() : state.phase === 'listening' && !state.muted ? getInputVolume() : 0;
-      level += (Math.min(1, raw * 1.6) - level) * 0.25;
+      target += (Math.min(1, raw * 1.6) - target) * 0.3;
+      level += (target - level) * 0.14;
       el.style.setProperty('--level', level.toFixed(3));
       raf = requestAnimationFrame(tick);
     };

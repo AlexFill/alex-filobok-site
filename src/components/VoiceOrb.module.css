@@ -16,6 +16,11 @@
   transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+/* Opening glides the orb onto the panel with a soft spring. */
+.orb[aria-expanded="true"] {
+  transition: transform 0.9s linear(0, 0.3 9%, 0.74 21%, 1.03 36%, 1.07 45%, 1.02 60%, 0.995 75%, 1);
+}
+
 .orb.dragging {
   transition: none;
   cursor: grabbing;
@@ -44,8 +49,30 @@
   inset: -20%;
   border-radius: 50%;
   background: radial-gradient(closest-side, var(--glow), transparent);
-  opacity: 0.6;
+  /* Breathes with the voice: brighter and wider as the level rises. */
+  opacity: calc(0.6 + var(--level, 0) * 0.6);
+  scale: calc(1 + var(--level, 0) * 0.3);
   pointer-events: none;
+}
+
+/* An arc that orbits the orb while the guide is thinking. */
+.arc {
+  position: absolute;
+  inset: -7%;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: var(--accent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.orb[data-phase="thinking"] .arc {
+  opacity: 1;
+  animation: spin 1.1s linear infinite;
+}
+
+@keyframes spin {
+  to { rotate: 360deg; }
 }
 
 .surface {
@@ -114,7 +141,7 @@
   backdrop-filter: blur(24px) saturate(1.4);
   -webkit-backdrop-filter: blur(24px) saturate(1.4);
   color: var(--fg);
-  animation: rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: rise 0.8s linear(0, 0.3 9%, 0.74 21%, 1.03 36%, 1.07 45%, 1.02 60%, 0.995 75%, 1) 0.08s both;
 }
 
 /* Desktop: a card on the right, the orb sitting on its top edge. */
@@ -148,5 +175,5 @@
 
 @media (prefers-reduced-motion: reduce) {
   .orb, .peek, .surface { transition: none; }
-  .surface, .aura, .ring, .panel { animation: none !important; }
+  .surface, .aura, .ring, .arc, .panel { animation: none !important; }
 }

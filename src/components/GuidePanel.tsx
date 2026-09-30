@@ -5,6 +5,7 @@ import { identity } from '@/content/profile';
 import { guide } from '@/lib/voice/prompt';
 import { ERROR_COPY, isLive, type VoicePhase } from '@/lib/voice/state';
 import type { useVoiceGuide } from '@/lib/voice/useVoiceGuide';
+import { StreamedText } from './StreamedText';
 
 type Voice = ReturnType<typeof useVoiceGuide>;
 
@@ -45,7 +46,7 @@ export function GuidePanel({ className, voice, onClose }: { className: string; v
         {guide.name}
       </h2>
       <p className="-mt-2 text-center text-[15px] text-muted" role="status" aria-live="polite">
-        {state.muted && live ? 'Muted' : STATUS[state.phase]}
+        {state.muted && live ? 'Muted' : state.error === 'unavailable' ? 'Resting for now' : STATUS[state.phase]}
       </p>
 
       {state.error ? (
@@ -55,9 +56,9 @@ export function GuidePanel({ className, voice, onClose }: { className: string; v
       ) : lines.length > 0 ? (
         <ol ref={log} className="flex max-h-44 flex-col gap-2 overflow-y-auto text-[15px] leading-snug" aria-label="Conversation">
           {lines.map((l) => (
-            <li key={l.id} className={l.who === 'you' ? 'text-muted' : ''}>
-              <span className="mr-1.5 font-semibold">{l.who === 'you' ? 'You' : guide.name}</span>
-              {l.text}
+            <li key={l.id} className={`line-rise ${l.who === 'you' ? 'text-muted' : ''}`}>
+              <span className="mr-1.5 font-semibold text-fg">{l.who === 'you' ? 'You' : guide.name}</span>
+              {l.who === 'guide' ? <StreamedText text={l.text} /> : l.text}
             </li>
           ))}
         </ol>

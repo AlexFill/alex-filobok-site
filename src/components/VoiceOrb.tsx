@@ -176,7 +176,8 @@ function VoiceOrbInner() {
         type="button"
         className={`${s.orb} ${drag ? s.dragging : ''}`}
         data-dock={open || drag ? undefined : state.dock ?? 'free'}
-        data-phase={voice.state.phase}
+        // Not being set up yet is not a failure, so the orb stays calm.
+        data-phase={voice.state.error === 'unavailable' ? 'idle' : voice.state.phase}
         style={{ '--size': `${size}px`, transform: `translate3d(${pos.left}px, ${pos.top}px, 0)` } as React.CSSProperties}
         aria-label={open ? orbLabel(voice.state) : `${orbLabel(voice.state)}. Drag it anywhere, or use the arrow keys to dock it to an edge.`}
         aria-expanded={open}
@@ -194,6 +195,7 @@ function VoiceOrbInner() {
         <span className={s.peek}>
           <span className={s.aura} />
           <span className={s.ring} aria-hidden="true" />
+          <span className={s.arc} aria-hidden="true" />
           <span className={`orb-surface ${s.surface}`} style={{ '--hue': HUE[platform] } as React.CSSProperties} />
         </span>
       </button>
