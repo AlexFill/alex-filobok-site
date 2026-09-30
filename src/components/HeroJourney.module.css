@@ -202,115 +202,53 @@
   color: var(--muted);
 }
 
-/* ---------- The scroll-driven journey (large screens, motion allowed) ---------- */
-
-@supports (animation-timeline: view()) {
-  @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
-    .hero {
-      height: 440svh;
-      view-timeline: --journey block;
-    }
-
-    .stage {
-      position: sticky;
-      top: 0;
-    }
-
-    .hint {
-      display: flex;
-    }
-
-    .cap1, .cap2, .cap3, .s1, .s2, .s3, .island, .chrome, .deck, .device, .screen, .hint {
-      animation-timeline: --journey;
-      animation-range: contain 0% contain 100%;
-      animation-fill-mode: both;
-      animation-timing-function: linear;
-    }
-
-    .cap1 { animation-name: cap1; }
-    .cap2 { animation-name: cap2; }
-    .cap3 { animation-name: cap3; }
-    .s1 { animation-name: s1; }
-    .s2 { animation-name: s2; }
-    .s3 { animation-name: s3; }
-    .island { animation-name: island; }
-    .chrome { animation-name: chrome; }
-    .deck { animation-name: deck; }
-    .device { animation-name: device; }
-    .screen { animation-name: screen; }
-    .hint { animation-name: hint; }
-  }
-}
-
-/*
- * Timeline: phone holds 0–20%, morphs to a laptop 20–38%, holds 38–58%, morphs
- * to a browser 58–76%, holds to the end. Morphs ease in and out (a keyframe's
- * timing function applies to the segment that starts there), and content
- * fades out before a morph and back in as the shape settles, so the device
- * never changes shape under readable text.
+/* ---------- The journey (large screens, motion allowed) ----------
+ * HeroMotion drives it from scroll with damping. The pre-paint script in
+ * layout.tsx adds .hero-motion to <html> when the journey will run, so the
+ * first paint already shows the phone instead of flashing the final frame.
  */
-@keyframes device {
-  0%, 20% { clip-path: inset(1cqw 35cqw 1cqw 35cqw round 5.4cqw); animation-timing-function: var(--morph); }
-  38%, 58% { clip-path: inset(4cqw 9cqw 8.8cqw 9cqw round 2.2cqw); animation-timing-function: var(--morph); }
-  76%, 100% { clip-path: inset(2cqw 0 2cqw 0 round 1.6cqw); }
+:global(html.hero-motion) .hero {
+  height: 440svh;
 }
 
-@keyframes screen {
-  0%, 20% { clip-path: inset(2.2cqw 36.2cqw 2.2cqw 36.2cqw round 4.2cqw); animation-timing-function: var(--morph); }
-  38%, 58% { clip-path: inset(5.4cqw 10.4cqw 10.2cqw 10.4cqw round 0.8cqw); animation-timing-function: var(--morph); }
-  76%, 100% { clip-path: inset(6cqw 0 2cqw 0 round 0 0 1.6cqw 1.6cqw); }
+:global(html.hero-motion) .stage {
+  position: sticky;
+  top: 0;
 }
 
-@keyframes cap1 {
-  0%, 20% { opacity: 1; transform: none; animation-timing-function: var(--out); }
-  29%, 100% { opacity: 0; transform: translateY(-14px); }
+:global(html.hero-motion) .hint {
+  display: flex;
 }
 
-@keyframes cap2 {
-  0%, 27% { opacity: 0; transform: translateY(14px); animation-timing-function: var(--in); }
-  36%, 58% { opacity: 1; transform: none; animation-timing-function: var(--out); }
-  67%, 100% { opacity: 0; transform: translateY(-14px); }
+:global(html.hero-motion) .cap1,
+:global(html.hero-motion) .s1,
+:global(html.hero-motion) .island {
+  opacity: 1;
 }
 
-@keyframes cap3 {
-  0%, 65% { opacity: 0; transform: translateY(14px); animation-timing-function: var(--in); }
-  74%, 100% { opacity: 1; transform: none; }
+:global(html.hero-motion) .cap3,
+:global(html.hero-motion) .s3,
+:global(html.hero-motion) .chrome {
+  opacity: 0;
 }
 
-@keyframes s1 {
-  0%, 16% { opacity: 1; transform: translate(-50%, -50%); animation-timing-function: var(--out); }
-  24%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.96); }
+:global(html.hero-motion) .device {
+  clip-path: inset(1cqw 35cqw 1cqw 35cqw round 5.4cqw);
 }
 
-@keyframes s2 {
-  0%, 29% { opacity: 0; transform: translate(-50%, -50%) scale(1.04); animation-timing-function: var(--in); }
-  37%, 54% { opacity: 1; transform: translate(-50%, -50%); animation-timing-function: var(--out); }
-  61%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.96); }
+:global(html.hero-motion) .screen {
+  clip-path: inset(2.2cqw 36.2cqw 2.2cqw 36.2cqw round 4.2cqw);
 }
 
-@keyframes s3 {
-  0%, 67% { opacity: 0; transform: translate(-50%, -50%) scale(1.04); animation-timing-function: var(--in); }
-  76%, 100% { opacity: 1; transform: translate(-50%, -50%); }
+:global(html.hero-motion) .cap1,
+:global(html.hero-motion) .cap2,
+:global(html.hero-motion) .cap3,
+:global(html.hero-motion) .scene,
+:global(html.hero-motion) .device,
+:global(html.hero-motion) .screen {
+  will-change: opacity, transform, clip-path;
 }
 
-@keyframes island {
-  0%, 15% { opacity: 1; animation-timing-function: var(--out); }
-  21%, 100% { opacity: 0; }
-}
-
-@keyframes chrome {
-  0%, 72% { opacity: 0; animation-timing-function: var(--in); }
-  79%, 100% { opacity: 1; }
-}
-
-/* The laptop base only shows while the device is a laptop, so it never floats under a moving shape. */
-@keyframes deck {
-  0%, 36% { opacity: 0; transform: scaleX(0.92); animation-timing-function: var(--in); }
-  42%, 54% { opacity: 1; transform: none; animation-timing-function: var(--out); }
-  58%, 100% { opacity: 0; transform: none; }
-}
-
-@keyframes hint {
-  0% { opacity: 1; }
-  6%, 100% { opacity: 0; }
+.glow {
+  filter: hue-rotate(var(--glow-hue, 0deg));
 }

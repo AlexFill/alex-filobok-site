@@ -30,7 +30,8 @@ export const viewport: Viewport = {
 };
 
 // Apply a saved theme choice before the first paint, so there's no flash.
-const themeScript = `(function(){try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`;
+// It also marks <html> when the hero journey will run, so the first paint shows the phone.
+const themeScript = `(function(){var d=document.documentElement;try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")d.setAttribute("data-theme",t)}catch(e){}if(window.matchMedia&&matchMedia("(min-width: 768px) and (prefers-reduced-motion: no-preference)").matches)d.classList.add("hero-motion")})()`;
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
