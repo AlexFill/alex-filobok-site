@@ -1,5 +1,6 @@
 import { guide } from '@/content/profile';
 import { OpenGuideButton } from './OpenGuideButton';
+import { PoweredBy } from './PoweredBy';
 
 /** Introduces Basil, the voice guide, as a friend you can talk to. */
 export function MeetBasil() {
@@ -31,6 +32,7 @@ export function MeetBasil() {
               </OpenGuideButton>
             ))}
           </div>
+          <PoweredBy />
         </div>
       </div>
     </section>

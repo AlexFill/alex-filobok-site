@@ -314,4 +314,6 @@ export const guide = {
   },
   greeting: 'Hi, I’m Basil, Alex’s friend. Tap me to talk about Alex’s work.',
   questions: ['What did Alex build at Promova?', 'What is NextXI?', 'What is Alex learning now?'],
+  /** Credit shown wherever Basil appears. */
+  poweredBy: { label: 'Voice by ElevenLabs', href: 'https://elevenlabs.io' },
 };

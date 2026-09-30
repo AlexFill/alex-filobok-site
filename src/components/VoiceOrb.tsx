@@ -268,6 +268,7 @@ function VoiceOrbInner() {
           }}
         >
           <p>{guide.greeting}</p>
+          <p className={s.credit}>{guide.poweredBy.label}</p>
           <button type="button" onClick={() => setGreeting(false)} aria-label="Dismiss greeting" className={s.dismiss}>
             ×
           </button>

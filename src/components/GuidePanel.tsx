@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import { guide, identity } from '@/content/profile';
 import { ERROR_COPY, isLive, type VoicePhase } from '@/lib/voice/state';
 import type { useVoiceGuide } from '@/lib/voice/useVoiceGuide';
+import { PoweredBy } from './PoweredBy';
 import { StreamedText } from './StreamedText';
 
 type Voice = ReturnType<typeof useVoiceGuide>;
@@ -110,6 +111,7 @@ export function GuidePanel({ className, voice, onClose }: { className: string; v
         <button type="button" onClick={onClose} className="min-h-11 rounded-full text-[15px] text-muted">
           Tuck it away
         </button>
+        <PoweredBy className="justify-center" />
       </div>
     </section>
   );
