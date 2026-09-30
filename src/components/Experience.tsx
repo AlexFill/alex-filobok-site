@@ -1,4 +1,4 @@
-import { chapters } from '@/content/profile';
+import { chapters, leads } from '@/content/profile';
 import { ChapterWatcher } from './ChapterWatcher';
 import { CompanyLogo } from './CompanyLogo';
 import { CountUp } from './CountUp';
@@ -12,7 +12,7 @@ export function Experience() {
           Experience
         </h2>
         <p className="reveal mt-4 max-w-[36em] text-lg leading-relaxed text-muted sm:text-[21px]">
-          Nine years across phone, desktop and web, from a first internship in Kyiv to Google in Warsaw.
+          {leads.experience}
         </p>
       </header>
 

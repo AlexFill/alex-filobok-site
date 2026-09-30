@@ -6,17 +6,17 @@ const [ios, macos, web] = journey;
 
 /**
  * The opening scene. Screen readers and no-motion visitors get the final
- * frame: the heading "Now it's the whole stack." and the full-stack scene.
+ * frame: the final heading and the full-stack scene.
  * The earlier captions and scenes are decorative steps of the animation.
  */
 export function HeroJourney() {
   return (
-    <section id="top" data-platform="ios" aria-labelledby="hero-title" className={s.hero}>
+    <section id="journey" data-platform="ios" aria-labelledby="journey-title" className={s.hero}>
       <div className={s.stage}>
         <div className={s.caps}>
           <p className={s.cap1} data-hero="cap1" aria-hidden="true">{ios.caption}</p>
           <p className={s.cap2} data-hero="cap2" aria-hidden="true">{macos.caption}</p>
-          <h1 id="hero-title" className={s.cap3} data-hero="cap3">{web.caption}</h1>
+          <h2 id="journey-title" className={s.cap3} data-hero="cap3">{web.caption}</h2>
         </div>
 
         <div className={s.rigWrap}>

@@ -15,7 +15,7 @@ const GLIDE = 0.1;
  */
 export function HeroMotion() {
   useEffect(() => {
-    const hero = document.getElementById('top');
+    const hero = document.getElementById('journey');
     if (!hero) return;
     const q = <T extends HTMLElement>(name: string) => hero.querySelector<T>(`[data-hero="${name}"]`);
     const els = {
