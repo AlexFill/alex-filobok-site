@@ -1,4 +1,5 @@
 import { inProgress, nextxi } from '@/content/profile';
+import { Tags } from './Tags';
 
 export function Projects() {
   return (
@@ -27,6 +28,7 @@ export function Projects() {
               </div>
             ))}
           </dl>
+          <Tags tags={nextxi.tags} label="Tools used on NextXI" />
           <div className="flex flex-wrap gap-4">
             <a
               href={nextxi.appStore}
