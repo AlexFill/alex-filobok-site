@@ -1,4 +1,4 @@
-import { chapters, identity, inProgress, journey, nextxi } from '@/content/profile';
+import { chapters, education, identity, inProgress, journey, nextxi, stack } from '@/content/profile';
 
 /** The assistant's name and one-line role. Edit here; the prompt and UI follow. */
 export const guide = {
@@ -15,7 +15,7 @@ export function buildAgentPrompt(): string {
   const experience = chapters
     .map((c) => {
       const entries = c.entries.map((e) => `  - [${e.id}] ${e.title}: ${e.body}`).join('\n');
-      return `${c.company} (${c.where}). ${c.roles.join('; ')}\n${entries}`;
+      return `${c.company} (${c.where}). ${c.roles.join('; ')}. Tools: ${c.tags.join(', ')}\n${entries}`;
     })
     .join('\n\n');
 
@@ -33,9 +33,12 @@ ${journey.map((j) => `- ${j.years}, ${j.label}: ${j.line}`).join('\n')}
 Experience:
 ${experience}
 
-Current project: ${nextxi.name}, ${nextxi.role}. ${nextxi.body}
+Current project: ${nextxi.name}, ${nextxi.role}. ${nextxi.body} Tools: ${nextxi.tags.join(', ')}.
 Also in progress: ${inProgress.name}. ${inProgress.body}
 
-Education: ${identity.education.degree}, ${identity.education.school}, ${identity.education.years}.
+Stack today: ${stack.today.join(', ')}. ${stack.before}
+
+Education: ${education.degree.degree}, ${education.degree.school}, ${education.degree.years}. ${education.degree.extra}
+Now learning: ${education.learning.name} by ${education.learning.by}. ${education.learning.body}
 Contact: ${identity.email}.`;
 }

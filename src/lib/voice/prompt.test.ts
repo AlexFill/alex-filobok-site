@@ -9,6 +9,12 @@ describe('buildAgentPrompt', () => {
     for (const c of chapters) for (const e of c.entries) expect(prompt).toContain(`[${e.id}]`);
   });
 
+  it('covers skills and education', () => {
+    expect(prompt).toContain('Tools: Python, C++');
+    expect(prompt).toContain('CS50');
+    expect(prompt).toContain('Machine Learning Crash Course');
+  });
+
   it('tells the agent to stay grounded and to use the tool', () => {
     expect(prompt).toContain('Never invent facts');
     expect(prompt).toContain('highlight_section');
