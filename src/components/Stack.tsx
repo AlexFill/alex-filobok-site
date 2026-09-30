@@ -15,7 +15,13 @@ export function Stack() {
         {stack.map((g) => (
           <div key={g.label} className="flex flex-col gap-3">
             <dt className="text-[15px] text-muted">{g.label}</dt>
-            <dd className="text-xl font-medium leading-snug tracking-[-0.01em] sm:text-2xl">{g.tools.join(' · ')}</dd>
+            <dd className="flex flex-wrap gap-x-3 gap-y-1 text-xl font-medium leading-snug tracking-[-0.01em] sm:text-2xl">
+              {g.tools.map((t) => (
+                <span key={t} className="whitespace-nowrap">
+                  {t}
+                </span>
+              ))}
+            </dd>
           </div>
         ))}
       </dl>
