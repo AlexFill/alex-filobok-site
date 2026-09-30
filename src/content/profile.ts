@@ -293,5 +293,14 @@ export const inProgress = {
   body: 'A voice assistant for your Fantasy Premier League team, built on ElevenLabs Agents. The agent shows its working on a pitch as it talks.',
 };
 
-/** What the voice guide will do once it's switched on (v2). */
-export const guideAbilities = ['Answer questions about my work', 'Read my CV aloud', 'Sing my career', 'Tell it as a fantasy tale'];
+/** Basil, the voice guide: Alex's friend who knows everything on this page. */
+export const guide = {
+  name: 'Basil',
+  role: 'the voice guide for Alex Filobok’s site',
+  intro: {
+    heading: 'This is my friend Basil.',
+    body: 'Basil is my voice guide. Ask about my work, a project or what I’m learning right now. Basil knows everything on this page and scrolls to whatever you talk about.',
+  },
+  greeting: 'Hi, I’m Basil, Alex’s friend. Tap me to talk about Alex’s work.',
+  questions: ['What did Alex build at Promova?', 'What is NextXI?', 'What is Alex learning now?'],
+};

@@ -1,8 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { identity } from '@/content/profile';
-import { guide } from '@/lib/voice/prompt';
+import { guide, identity } from '@/content/profile';
 import { ERROR_COPY, isLive, type VoicePhase } from '@/lib/voice/state';
 import type { useVoiceGuide } from '@/lib/voice/useVoiceGuide';
 import { StreamedText } from './StreamedText';
@@ -17,8 +16,6 @@ const STATUS: Record<VoicePhase, string> = {
   speaking: 'Speaking',
   error: 'Something went wrong',
 };
-
-const SUGGESTIONS = ['What did Alex build at Promova?', 'Tell me about NextXI', 'Why voice AI?'];
 
 /** The voice guide's panel: live status, a rolling transcript and the controls. */
 export function GuidePanel({ className, voice, onClose }: { className: string; voice: Voice; onClose: () => void }) {
@@ -70,7 +67,7 @@ export function GuidePanel({ className, voice, onClose }: { className: string; v
               : 'Say hello. I will scroll to what we talk about.'}
           </p>
           <ul className="flex flex-wrap gap-2" aria-label="Things you could ask">
-            {SUGGESTIONS.map((q) => (
+            {guide.questions.map((q) => (
               <li key={q} className="rounded-full border border-dashed border-line px-3.5 py-2 text-sm text-muted">
                 {q}
               </li>

@@ -2,6 +2,7 @@ import { Contact } from '@/components/Contact';
 import { Education } from '@/components/Education';
 import { Experience } from '@/components/Experience';
 import { HeroJourney } from '@/components/HeroJourney';
+import { MeetBasil } from '@/components/MeetBasil';
 import { Nav } from '@/components/Nav';
 import { Projects } from '@/components/Projects';
 import { SpotlightTracker } from '@/components/SpotlightTracker';
@@ -29,6 +30,7 @@ export default function Home() {
       <main>
         <HeroJourney />
         <Stack />
+        <MeetBasil />
         <Experience />
         <Projects />
         <Education />

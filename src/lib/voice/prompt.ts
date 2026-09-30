@@ -1,10 +1,4 @@
-import { chapters, education, identity, inProgress, journey, nextxi, stack } from '@/content/profile';
-
-/** The assistant's name and one-line role. Edit here; the prompt and UI follow. */
-export const guide = {
-  name: 'Basil',
-  role: 'the voice guide for Alex Filobok’s site',
-} as const;
+import { chapters, education, guide, identity, inProgress, journey, nextxi, stack } from '@/content/profile';
 
 /**
  * System prompt for the ElevenLabs agent, generated from the same content the

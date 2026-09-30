@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { ConversationProvider } from '@elevenlabs/react';
+import { guide } from '@/content/profile';
+import { OPEN_GUIDE_EVENT } from '@/lib/voice/events';
 import { orbLabel } from '@/lib/voice/state';
 import { useVoiceGuide } from '@/lib/voice/useVoiceGuide';
 import { defaultState, dockForKey, isCompact, parseSaved, placement, snapToEdge, type OrbState, type Viewport } from '@/lib/dock';
@@ -10,6 +12,9 @@ import { GuidePanel } from './GuidePanel';
 import s from './VoiceOrb.module.css';
 
 const STORAGE_KEY = 'voice-orb';
+const GREETED_KEY = 'basil-greeted';
+const GREETING_MS = 6000;
+const BUBBLE_W = 240;
 const HUE: Record<Platform, string> = { ios: '0deg', macos: '38deg', web: '-62deg' };
 /** How far a pointer must travel before a press counts as a drag, not a tap. */
 const TAP_SLOP = 6;
@@ -28,6 +33,22 @@ function readSaved(): OrbState | null {
     return parseSaved(localStorage.getItem(STORAGE_KEY));
   } catch {
     return null;
+  }
+}
+
+function greetedBefore(): boolean {
+  try {
+    return localStorage.getItem(GREETED_KEY) === '1';
+  } catch {
+    return true;
+  }
+}
+
+function markGreeted() {
+  try {
+    localStorage.setItem(GREETED_KEY, '1');
+  } catch {
+    // Storage blocked: the greeting may show again next visit, which is harmless.
   }
 }
 
@@ -58,6 +79,7 @@ function VoiceOrbInner() {
   const [drag, setDrag] = useState<{ left: number; top: number } | null>(null);
   const [open, setOpen] = useState(false);
   const [platform, setPlatform] = useState<Platform>('ios');
+  const [greeting, setGreeting] = useState(false);
   const pointer = useRef<{ id: number; sx: number; sy: number; ox: number; oy: number; moved: boolean } | null>(null);
   const orbRef = useRef<HTMLButtonElement>(null);
   const voice = useVoiceGuide(orbRef);
@@ -87,6 +109,37 @@ function VoiceOrbInner() {
     return () => io.disconnect();
   }, []);
 
+  // "Say hi to Basil" buttons elsewhere on the page open the guide.
+  useEffect(() => {
+    const onOpen = () => {
+      setGreeting(false);
+      if (open) return;
+      setOpen(true);
+      void start();
+    };
+    window.addEventListener(OPEN_GUIDE_EVENT, onOpen);
+    return () => window.removeEventListener(OPEN_GUIDE_EVENT, onOpen);
+  }, [open, start]);
+
+  // Say hello once per visitor, as the hero gives way to the page.
+  useEffect(() => {
+    const anchor = document.getElementById('stack');
+    if (!anchor || greetedBefore()) return;
+    let timer = 0;
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      io.disconnect();
+      markGreeted();
+      setGreeting(true);
+      timer = window.setTimeout(() => setGreeting(false), GREETING_MS);
+    });
+    io.observe(anchor);
+    return () => {
+      io.disconnect();
+      window.clearTimeout(timer);
+    };
+  }, []);
+
   if (!mounted) return null;
 
   const openPos = isCompact(vp)
@@ -96,6 +149,7 @@ function VoiceOrbInner() {
 
   // Opening the panel starts a hands-free conversation; closing it ends the conversation.
   const toggle = () => {
+    setGreeting(false);
     if (open) {
       stop();
       setOpen(false);
@@ -199,6 +253,26 @@ function VoiceOrbInner() {
           <span className={`orb-surface ${s.surface}`} style={{ '--hue': HUE[platform] } as React.CSSProperties} />
         </span>
       </button>
+      {greeting && !open && !drag && (
+        <div
+          className={s.greeting}
+          role="status"
+          style={{
+            // Beside the visible part of the orb, never under it (a docked orb is partly off screen).
+            left: Math.min(
+              vp.w - BUBBLE_W - 16,
+              Math.max(16, pos.left + size / 2 > vp.w / 2 ? Math.min(pos.left, vp.w - size * 0.45) - BUBBLE_W - 12 : Math.max(pos.left + size, size * 0.6) + 12),
+            ),
+            top: Math.min(vp.h - 120, Math.max(72, pos.top + size * 0.15)),
+            width: BUBBLE_W,
+          }}
+        >
+          <p>{guide.greeting}</p>
+          <button type="button" onClick={() => setGreeting(false)} aria-label="Dismiss greeting" className={s.dismiss}>
+            ×
+          </button>
+        </div>
+      )}
       {open && <GuidePanel className={s.panel} voice={voice} onClose={close} />}
     </>
   );

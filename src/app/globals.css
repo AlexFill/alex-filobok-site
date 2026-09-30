@@ -238,3 +238,22 @@ body {
     transform: translateY(8px);
   }
 }
+
+/* Basil in the Meet Basil section: breathing, with a bobbing "Hi!". */
+.basil-orb {
+  box-shadow: 0 0 70px var(--glow);
+  animation: basil-breathe 5s ease-in-out infinite;
+}
+.basil-hi {
+  animation: basil-bob 3.2s ease-in-out infinite;
+}
+@keyframes basil-breathe {
+  50% {
+    scale: 1.04;
+  }
+}
+@keyframes basil-bob {
+  50% {
+    translate: 0 -5px;
+  }
+}
