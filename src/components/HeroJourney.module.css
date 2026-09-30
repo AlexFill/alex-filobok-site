@@ -9,6 +9,9 @@
  */
 
 .hero {
+  --morph: cubic-bezier(0.65, 0, 0.35, 1);
+  --in: cubic-bezier(0.16, 1, 0.3, 1);
+  --out: cubic-bezier(0.7, 0, 0.84, 0);
   position: relative;
   height: 100svh;
 }
@@ -204,7 +207,7 @@
 @supports (animation-timeline: view()) {
   @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
     .hero {
-      height: 400svh;
+      height: 440svh;
       view-timeline: --journey block;
     }
 
@@ -239,64 +242,72 @@
   }
 }
 
+/*
+ * Timeline: phone holds 0–20%, morphs to a laptop 20–38%, holds 38–58%, morphs
+ * to a browser 58–76%, holds to the end. Morphs ease in and out (a keyframe's
+ * timing function applies to the segment that starts there), and content
+ * fades out before a morph and back in as the shape settles, so the device
+ * never changes shape under readable text.
+ */
 @keyframes device {
-  0%, 22% { clip-path: inset(1cqw 35cqw 1cqw 35cqw round 5.4cqw); }
-  40%, 58% { clip-path: inset(4cqw 9cqw 8.8cqw 9cqw round 2.2cqw); }
+  0%, 20% { clip-path: inset(1cqw 35cqw 1cqw 35cqw round 5.4cqw); animation-timing-function: var(--morph); }
+  38%, 58% { clip-path: inset(4cqw 9cqw 8.8cqw 9cqw round 2.2cqw); animation-timing-function: var(--morph); }
   76%, 100% { clip-path: inset(2cqw 0 2cqw 0 round 1.6cqw); }
 }
 
 @keyframes screen {
-  0%, 22% { clip-path: inset(2.2cqw 36.2cqw 2.2cqw 36.2cqw round 4.2cqw); }
-  40%, 58% { clip-path: inset(5.4cqw 10.4cqw 10.2cqw 10.4cqw round 0.8cqw); }
+  0%, 20% { clip-path: inset(2.2cqw 36.2cqw 2.2cqw 36.2cqw round 4.2cqw); animation-timing-function: var(--morph); }
+  38%, 58% { clip-path: inset(5.4cqw 10.4cqw 10.2cqw 10.4cqw round 0.8cqw); animation-timing-function: var(--morph); }
   76%, 100% { clip-path: inset(6cqw 0 2cqw 0 round 0 0 1.6cqw 1.6cqw); }
 }
 
 @keyframes cap1 {
-  0%, 22% { opacity: 1; transform: none; }
-  32%, 100% { opacity: 0; transform: translateY(-18px); }
+  0%, 20% { opacity: 1; transform: none; animation-timing-function: var(--out); }
+  29%, 100% { opacity: 0; transform: translateY(-14px); }
 }
 
 @keyframes cap2 {
-  0%, 32% { opacity: 0; transform: translateY(18px); }
-  42%, 58% { opacity: 1; transform: none; }
-  68%, 100% { opacity: 0; transform: translateY(-18px); }
+  0%, 27% { opacity: 0; transform: translateY(14px); animation-timing-function: var(--in); }
+  36%, 58% { opacity: 1; transform: none; animation-timing-function: var(--out); }
+  67%, 100% { opacity: 0; transform: translateY(-14px); }
 }
 
 @keyframes cap3 {
-  0%, 68% { opacity: 0; transform: translateY(18px); }
-  80%, 100% { opacity: 1; transform: none; }
+  0%, 65% { opacity: 0; transform: translateY(14px); animation-timing-function: var(--in); }
+  74%, 100% { opacity: 1; transform: none; }
 }
 
 @keyframes s1 {
-  0%, 20% { opacity: 1; }
-  28%, 100% { opacity: 0; }
+  0%, 16% { opacity: 1; transform: translate(-50%, -50%); animation-timing-function: var(--out); }
+  24%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.96); }
 }
 
 @keyframes s2 {
-  0%, 34% { opacity: 0; }
-  42%, 58% { opacity: 1; }
-  66%, 100% { opacity: 0; }
+  0%, 29% { opacity: 0; transform: translate(-50%, -50%) scale(1.04); animation-timing-function: var(--in); }
+  37%, 54% { opacity: 1; transform: translate(-50%, -50%); animation-timing-function: var(--out); }
+  61%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.96); }
 }
 
 @keyframes s3 {
-  0%, 72% { opacity: 0; }
-  82%, 100% { opacity: 1; }
+  0%, 67% { opacity: 0; transform: translate(-50%, -50%) scale(1.04); animation-timing-function: var(--in); }
+  76%, 100% { opacity: 1; transform: translate(-50%, -50%); }
 }
 
 @keyframes island {
-  0%, 18% { opacity: 1; }
-  26%, 100% { opacity: 0; }
+  0%, 15% { opacity: 1; animation-timing-function: var(--out); }
+  21%, 100% { opacity: 0; }
 }
 
 @keyframes chrome {
-  0%, 70% { opacity: 0; }
-  80%, 100% { opacity: 1; }
+  0%, 72% { opacity: 0; animation-timing-function: var(--in); }
+  79%, 100% { opacity: 1; }
 }
 
+/* The laptop base only shows while the device is a laptop, so it never floats under a moving shape. */
 @keyframes deck {
-  0%, 30% { opacity: 0; transform: scaleX(0.5); }
-  40%, 58% { opacity: 1; transform: none; }
-  66%, 100% { opacity: 0; transform: scaleX(1.08); }
+  0%, 36% { opacity: 0; transform: scaleX(0.92); animation-timing-function: var(--in); }
+  42%, 54% { opacity: 1; transform: none; animation-timing-function: var(--out); }
+  58%, 100% { opacity: 0; transform: none; }
 }
 
 @keyframes hint {
