@@ -41,6 +41,10 @@ describe('profile content', () => {
     expect(profile.education.learning.href).toMatch(/^https:\/\//);
   });
 
+  it('tells the journey in the first person', () => {
+    for (const j of profile.journey) expect(j.caption).toMatch(/^(I|Then I|Now I)\b/);
+  });
+
   it('uses American spelling', () => {
     expect(allText).not.toMatch(/optimis|colour|behaviour|organis/i);
   });

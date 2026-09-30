@@ -43,18 +43,19 @@ export interface Link {
   label: string;
   handle?: string;
   href: string;
-  icon: 'linkedin' | 'appstore' | 'github' | 'x' | 'instagram' | 'telegram';
+  icon: 'linkedin' | 'github' | 'x' | 'instagram';
 }
 
 export const identity = {
   name: 'Alex Filobok',
-  title: 'Full-Stack Product Engineer',
+  title: 'Software Engineer',
+  headline: 'Software Engineer at Google',
   location: 'Warsaw, Poland',
   availability: 'Open to remote work',
   email: 'alexfill.af@gmail.com',
   siteUrl: 'https://alexfilobok.vercel.app',
   summary:
-    'Product engineer with nine years of experience shipping software people use, from iPhone apps to macOS security features to full-stack TypeScript.',
+    'Software engineer at Google with nine years of shipping software people use, from iPhone apps to macOS security features to full-stack TypeScript.',
   education: {
     degree: 'BSc in Computer Science and Applied Mathematics',
     school: 'Igor Sikorsky Kyiv Polytechnic Institute',
@@ -62,40 +63,50 @@ export const identity = {
   },
 };
 
-/** Turn on once github.com/AlexFill has public work to show. */
-export const showGitHub = false;
-
+/** Where to find Alex elsewhere, shown in the contact section. */
 export const links: Link[] = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/alex-filobok/', icon: 'linkedin' },
-  { label: 'NextXI on the App Store', href: 'https://apps.apple.com/us/app/nextxi-fpl/id6756494301', icon: 'appstore' },
   { label: 'X', handle: '@alex_filobok', href: 'https://x.com/alex_filobok', icon: 'x' },
   { label: 'Instagram', handle: '@alexfill.af', href: 'https://www.instagram.com/alexfill.af/', icon: 'instagram' },
-  { label: 'Telegram', handle: '@alexfill', href: 'https://t.me/alexfill', icon: 'telegram' },
-  ...(showGitHub ? [{ label: 'GitHub', href: 'https://github.com/AlexFill', icon: 'github' as const }] : []),
+  { label: 'GitHub', handle: 'AlexFill', href: 'https://github.com/AlexFill', icon: 'github' },
 ];
+
+/** The opening screen: who Alex is, in his own words. */
+export const intro = {
+  greeting: 'Hi, I’m Alex.',
+  summary:
+    'I’ve spent nine years building software people use: an iPhone app with 20M+ downloads, security features for a Mac product with 30M+ users, and now full-stack products in TypeScript. Today I’m a software engineer at Google in Warsaw.',
+  cue: 'This is how I got here.',
+};
+
+/** First-person section intros. */
+export const leads = {
+  stack: 'The tools I reach for.',
+  experience: 'Where I’ve worked, from my first internship in Kyiv to Google in Warsaw.',
+};
 
 /** The three acts of the hero's device morph. */
 export const journey = [
   {
     platform: 'ios' as Platform,
-    caption: 'It started on a phone.',
+    caption: 'I started on a phone.',
     years: '2017 – 2022',
     label: 'iOS',
-    line: 'From intern to iOS team lead, across three companies in Kyiv.',
+    line: 'I went from intern to iOS team lead, across three companies in Kyiv.',
   },
   {
     platform: 'macos' as Platform,
-    caption: 'Then it moved to the desktop.',
+    caption: 'Then I moved to the desktop.',
     years: '2022 – 2025',
     label: 'macOS',
-    line: 'Four security features at MacPaw, shipped to a product with 30M+ users.',
+    line: 'I shipped four security features at MacPaw, for a product with 30M+ users.',
   },
   {
     platform: 'web' as Platform,
-    caption: 'Now it’s the whole stack.',
+    caption: 'Now I build across the whole stack.',
     years: '2025 – now',
     label: 'Full stack',
-    line: 'NextXI, the app I co-founded: React Native, Supabase and Python. TypeScript and React on the web. iOS and performance work at Google.',
+    line: 'I co-founded NextXI and built it in React Native, Supabase and Python. At Google I do iOS and performance work.',
   },
 ];
 
