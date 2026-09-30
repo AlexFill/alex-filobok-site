@@ -1,4 +1,5 @@
 import { Contact } from '@/components/Contact';
+import { Education } from '@/components/Education';
 import { Experience } from '@/components/Experience';
 import { HeroJourney } from '@/components/HeroJourney';
 import { Nav } from '@/components/Nav';
@@ -27,6 +28,7 @@ export default function Home() {
         <HeroJourney />
         <Experience />
         <Projects />
+        <Education />
       </main>
       <Contact />
       <VoiceOrb />

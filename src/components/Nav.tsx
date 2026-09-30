@@ -11,6 +11,7 @@ export function Nav() {
         <div className="flex items-center gap-2 text-[15px] text-muted sm:gap-8">
           <a href="#work" className="hidden px-1 py-3 transition-colors hover:text-fg sm:block">Work</a>
           <a href="#projects" className="hidden px-1 py-3 transition-colors hover:text-fg sm:block">Projects</a>
+          <a href="#education" className="hidden px-1 py-3 transition-colors hover:text-fg md:block">Education</a>
           <a href="#contact" className="px-1 py-3 transition-colors hover:text-fg">Contact</a>
           <ThemeToggle />
         </div>
