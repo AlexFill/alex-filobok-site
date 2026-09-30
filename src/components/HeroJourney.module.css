@@ -1,0 +1,305 @@
+/*
+ * The platforms journey: one device morphs phone → laptop → browser as the
+ * page scrolls through this section. Everything inside the rig is sized in
+ * container units (cqw, the rig is 100 × 64 cqw), so the morph scales with the
+ * window. The morph uses clip-path, never width/height.
+ *
+ * Without scroll-driven animation support, or with reduced motion, the hero
+ * is one screen tall and shows the final frame.
+ */
+
+.hero {
+  position: relative;
+  height: 100svh;
+}
+
+.stage {
+  height: 100svh;
+  box-sizing: border-box;
+  padding-top: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 4svh, 40px);
+  overflow: hidden;
+}
+
+.caps {
+  display: grid;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.caps > * {
+  grid-area: 1 / 1;
+  margin: 0;
+  font-size: clamp(34px, 4.2vw, 60px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+}
+
+.cap1,
+.cap2 {
+  opacity: 0;
+}
+
+.rigWrap {
+  container-type: inline-size;
+  width: min(1000px, calc(100vw - 48px), calc((100svh - 250px) * 1.5625));
+}
+
+.rig {
+  position: relative;
+  width: 100cqw;
+  height: 64cqw;
+}
+
+.glow {
+  position: absolute;
+  inset: -12cqw;
+  background: radial-gradient(closest-side, var(--glow), transparent);
+  pointer-events: none;
+}
+
+.device,
+.screen {
+  position: absolute;
+  inset: 0;
+}
+
+.device {
+  background: var(--device);
+  clip-path: inset(2cqw 0 2cqw 0 round 1.6cqw);
+}
+
+.screen {
+  background: var(--screen);
+  overflow: hidden;
+  clip-path: inset(6cqw 0 2cqw 0 round 0 0 1.6cqw 1.6cqw);
+}
+
+.scene {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1cqw;
+  text-align: center;
+}
+
+.scene small {
+  font-size: max(12px, 1.5cqw);
+  color: var(--muted);
+}
+
+.scene strong {
+  font-size: 5.2cqw;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.scene p {
+  margin: 0;
+  font-size: max(13px, 1.75cqw);
+  line-height: 1.45;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+.s1 {
+  top: 32cqw;
+  width: 24cqw;
+  opacity: 0;
+}
+
+.s2 {
+  top: 29.6cqw;
+  width: 54cqw;
+  opacity: 0;
+}
+
+.s3 {
+  top: 34cqw;
+  width: 70cqw;
+}
+
+.island {
+  position: absolute;
+  top: 3.2cqw;
+  left: 50%;
+  width: 9.6cqw;
+  height: 2.8cqw;
+  margin-left: -4.8cqw;
+  border-radius: 99px;
+  background: #000;
+  opacity: 0;
+}
+
+.chrome {
+  position: absolute;
+  top: 2cqw;
+  left: 0;
+  right: 0;
+  height: 4cqw;
+  display: flex;
+  align-items: center;
+  gap: 0.8cqw;
+  padding: 0 1.6cqw;
+  border-bottom: 1px solid var(--line);
+}
+
+.chrome i {
+  width: 1.1cqw;
+  height: 1.1cqw;
+  border-radius: 50%;
+  background: var(--line);
+}
+
+.chrome b {
+  margin-left: 1.6cqw;
+  width: 36cqw;
+  height: 2.4cqw;
+  border-radius: 0.8cqw;
+  background: var(--screen);
+  font-weight: 400;
+  font-size: max(10px, 1.2cqw);
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deck {
+  position: absolute;
+  top: 55.2cqw;
+  left: 5cqw;
+  right: 5cqw;
+  height: 1.8cqw;
+  border-radius: 0 0 1.8cqw 1.8cqw;
+  background: var(--device);
+  border-top: 1px solid var(--line);
+  opacity: 0;
+}
+
+.hint {
+  position: absolute;
+  bottom: 28px;
+  left: 0;
+  right: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ---------- The scroll-driven journey (large screens, motion allowed) ---------- */
+
+@supports (animation-timeline: view()) {
+  @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+    .hero {
+      height: 400svh;
+      view-timeline: --journey block;
+    }
+
+    .stage {
+      position: sticky;
+      top: 0;
+    }
+
+    .hint {
+      display: flex;
+    }
+
+    .cap1, .cap2, .cap3, .s1, .s2, .s3, .island, .chrome, .deck, .device, .screen, .hint {
+      animation-timeline: --journey;
+      animation-range: contain 0% contain 100%;
+      animation-fill-mode: both;
+      animation-timing-function: linear;
+    }
+
+    .cap1 { animation-name: cap1; }
+    .cap2 { animation-name: cap2; }
+    .cap3 { animation-name: cap3; }
+    .s1 { animation-name: s1; }
+    .s2 { animation-name: s2; }
+    .s3 { animation-name: s3; }
+    .island { animation-name: island; }
+    .chrome { animation-name: chrome; }
+    .deck { animation-name: deck; }
+    .device { animation-name: device; }
+    .screen { animation-name: screen; }
+    .hint { animation-name: hint; }
+  }
+}
+
+@keyframes device {
+  0%, 22% { clip-path: inset(1cqw 35cqw 1cqw 35cqw round 5.4cqw); }
+  40%, 58% { clip-path: inset(4cqw 9cqw 8.8cqw 9cqw round 2.2cqw); }
+  76%, 100% { clip-path: inset(2cqw 0 2cqw 0 round 1.6cqw); }
+}
+
+@keyframes screen {
+  0%, 22% { clip-path: inset(2.2cqw 36.2cqw 2.2cqw 36.2cqw round 4.2cqw); }
+  40%, 58% { clip-path: inset(5.4cqw 10.4cqw 10.2cqw 10.4cqw round 0.8cqw); }
+  76%, 100% { clip-path: inset(6cqw 0 2cqw 0 round 0 0 1.6cqw 1.6cqw); }
+}
+
+@keyframes cap1 {
+  0%, 22% { opacity: 1; transform: none; }
+  32%, 100% { opacity: 0; transform: translateY(-18px); }
+}
+
+@keyframes cap2 {
+  0%, 32% { opacity: 0; transform: translateY(18px); }
+  42%, 58% { opacity: 1; transform: none; }
+  68%, 100% { opacity: 0; transform: translateY(-18px); }
+}
+
+@keyframes cap3 {
+  0%, 68% { opacity: 0; transform: translateY(18px); }
+  80%, 100% { opacity: 1; transform: none; }
+}
+
+@keyframes s1 {
+  0%, 20% { opacity: 1; }
+  28%, 100% { opacity: 0; }
+}
+
+@keyframes s2 {
+  0%, 34% { opacity: 0; }
+  42%, 58% { opacity: 1; }
+  66%, 100% { opacity: 0; }
+}
+
+@keyframes s3 {
+  0%, 72% { opacity: 0; }
+  82%, 100% { opacity: 1; }
+}
+
+@keyframes island {
+  0%, 18% { opacity: 1; }
+  26%, 100% { opacity: 0; }
+}
+
+@keyframes chrome {
+  0%, 70% { opacity: 0; }
+  80%, 100% { opacity: 1; }
+}
+
+@keyframes deck {
+  0%, 30% { opacity: 0; transform: scaleX(0.5); }
+  40%, 58% { opacity: 1; transform: none; }
+  66%, 100% { opacity: 0; transform: scaleX(1.08); }
+}
+
+@keyframes hint {
+  0% { opacity: 1; }
+  6%, 100% { opacity: 0; }
+}
