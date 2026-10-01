@@ -1,4 +1,4 @@
-import { chapters, education, guide, identity, inProgress, intro, journey, nextxi, stack } from '@/content/profile';
+import { chapters, education, guide, identity, intro, journey, nextxi, stack } from '@/content/profile';
 
 /**
  * System prompt for the ElevenLabs agent, generated from the same content the
@@ -29,7 +29,6 @@ Experience:
 ${experience}
 
 Current project: ${nextxi.name}, ${nextxi.role}. ${nextxi.body} Tools: ${nextxi.tags.join(', ')}.
-Also in progress: ${inProgress.name}. ${inProgress.body}
 
 Stack: ${stack.map((g) => `${g.label}: ${g.tools.join(', ')}`).join('. ')}.
 

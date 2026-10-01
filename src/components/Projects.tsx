@@ -1,4 +1,5 @@
-import { inProgress, nextxi } from '@/content/profile';
+import Image from 'next/image';
+import { nextxi } from '@/content/profile';
 import { CountUp } from './CountUp';
 import { Tags } from './Tags';
 
@@ -44,19 +45,22 @@ export function Projects() {
             </a>
           </div>
         </div>
-        {/* A composed screenshot goes here once Alex picks the screens. */}
-        <div className="grid aspect-[5/4] place-items-center rounded-[28px] border border-line bg-bg">
-          <div className="flex items-end gap-4" aria-hidden="true">
-            <div className="h-56 w-28 rounded-[22px] border-[6px] border-[var(--device)] bg-[var(--screen)] sm:h-72 sm:w-36" />
-            <div className="h-64 w-32 rounded-[24px] border-[6px] border-[var(--device)] bg-[var(--screen)] sm:h-80 sm:w-40" />
-          </div>
+        {/* Three store screenshots, fanned out; the middle one sits forward. */}
+        <div className="flex items-center justify-center" aria-label="NextXI screenshots" role="group">
+          {nextxi.screenshots.map((shot, i) => (
+            <Image
+              key={shot.src}
+              src={shot.src}
+              alt={shot.alt}
+              width={690}
+              height={1499}
+              sizes="(min-width: 1024px) 220px, (min-width: 640px) 30vw, 32vw"
+              className={`shot w-[32%] max-w-[230px] rounded-[22px] shadow-[0_24px_60px_-24px_rgb(0_0_0/0.45)] ${
+                i === 1 ? 'z-10 scale-105' : i === 0 ? 'shot-left -mr-[6%] opacity-95' : 'shot-right -ml-[6%] opacity-95'
+              }`}
+            />
+          ))}
         </div>
-      </article>
-
-      <article className="reveal flex max-w-[560px] flex-col gap-2.5 border-t border-line pt-6">
-        <small className="text-[15px] text-muted">{inProgress.status}</small>
-        <h3 className="text-[26px] font-semibold tracking-[-0.015em]">{inProgress.name}</h3>
-        <p className="text-[17px] leading-relaxed text-muted">{inProgress.body}</p>
       </article>
     </section>
   );

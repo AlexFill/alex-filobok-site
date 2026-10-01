@@ -273,3 +273,18 @@ body {
     transform: translateY(18px);
   }
 }
+
+/* NextXI screenshots lean in slightly and straighten on hover. */
+.shot {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.shot-left {
+  transform: rotate(-4deg) translateY(10px);
+}
+.shot-right {
+  transform: rotate(4deg) translateY(10px);
+}
+.spot:hover .shot-left,
+.spot:hover .shot-right {
+  transform: none;
+}

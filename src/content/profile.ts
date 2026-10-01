@@ -271,7 +271,13 @@ export const nextxi = {
   body: 'A Fantasy Premier League planner for iOS and Android. I built the mobile app in React Native and TypeScript, its backend on Supabase, a Python optimization service that plans transfers, and our metrics dashboard. My co-founder built the web app.',
   stats: [
     { value: '2,200+', label: 'first-time iOS downloads' },
-    { value: '2', label: 'platforms, one codebase' },
+    { value: '1K+', label: 'downloads on Google Play' },
+  ],
+  /** App Store screenshots of NextXI, in the order they appear on the store. */
+  screenshots: [
+    { src: '/nextxi/01-planner.jpg', alt: 'NextXI planner: plan every gameweek before the deadline, with your squad on the pitch.' },
+    { src: '/nextxi/03-plan.jpg', alt: 'NextXI season plan: transfers and chips mapped across gameweeks.' },
+    { src: '/nextxi/05-stats.jpg', alt: 'NextXI player stats and projections.' },
   ],
   tags: ['TypeScript', 'React Native', 'Expo', 'Supabase', 'Postgres', 'Python', 'FastAPI', 'Next.js'],
   appStore: 'https://apps.apple.com/us/app/nextxi-fpl/id6756494301',
@@ -296,12 +302,6 @@ export const education = {
     href: 'https://developers.google.com/machine-learning/crash-course',
     body: 'Google’s course on how models learn, from regression to neural networks and embeddings. I’m working through it to understand how today’s AI works under the hood.',
   },
-};
-
-export const inProgress = {
-  name: 'Captain’s Call',
-  status: 'In progress',
-  body: 'A voice assistant for your Fantasy Premier League team, built on ElevenLabs Agents. The agent shows its working on a pitch as it talks.',
 };
 
 /** Basil, the voice guide: Alex's friend who knows everything on this page. */
