@@ -2,7 +2,7 @@
 
 # Project guide
 
-A personal site for Alex Filobok (Full-Stack Product Engineer), kept general rather than tuned to one employer. Next.js 16 App Router, React 19, Tailwind 4, strict TypeScript, Vitest. The centerpiece is a draggable voice guide built on ElevenLabs Agents.
+The personal site of Alex Filobok, Software Engineer: his story, work and projects, told in his own voice. Next.js 16 App Router, React 19, Tailwind 4, strict TypeScript, Vitest. The centerpiece is a draggable voice guide built on ElevenLabs Agents.
 
 ## Commands
 

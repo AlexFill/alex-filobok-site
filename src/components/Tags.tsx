@@ -1,4 +1,4 @@
-/** A row of tool tags. All tags look the same: the page is a general profile, not tuned to one role. */
+/** A row of tool tags, all styled alike so no single tool takes the spotlight. */
 export function Tags({ tags, label }: { tags: string[]; label: string }) {
   return (
     <ul className="flex flex-wrap gap-1.5" aria-label={label}>
