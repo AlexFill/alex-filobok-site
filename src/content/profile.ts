@@ -53,7 +53,7 @@ export const identity = {
   location: 'Warsaw, Poland',
   availability: 'Open to remote work',
   email: 'alexfill.af@gmail.com',
-  siteUrl: 'https://alexfilobok.vercel.app',
+  siteUrl: 'https://alexfilobok.com',
   summary:
     'Software engineer at Google with nine years of shipping software people use, from iPhone apps to macOS security features to full-stack TypeScript.',
   education: {

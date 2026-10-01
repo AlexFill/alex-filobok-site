@@ -1,4 +1,4 @@
-# alexfilobok.vercel.app
+# alexfilobok.com
 
 The personal site of Alex Filobok, Software Engineer at Google. It opens with "Hi, I'm Alex" and tells nine
 years of work as one first-person scroll: a device morphs from a phone to a laptop to a browser as the story

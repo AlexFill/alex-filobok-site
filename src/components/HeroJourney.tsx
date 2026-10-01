@@ -46,7 +46,7 @@ export function HeroJourney() {
               <i />
               <i />
               <i />
-              <b>alexfilobok.vercel.app</b>
+              <b>alexfilobok.com</b>
             </div>
           </div>
         </div>
