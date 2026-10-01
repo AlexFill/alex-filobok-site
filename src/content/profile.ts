@@ -79,6 +79,16 @@ export const intro = {
   cue: 'This is how I got here.',
 };
 
+/** Page sections Basil can scroll to, by the id each section renders with. */
+export const pageSections = [
+  { id: 'stack', label: 'Alex’s stack' },
+  { id: 'basil', label: 'Meet Basil' },
+  { id: 'work', label: 'Experience' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'education', label: 'Education' },
+  { id: 'contact', label: 'Contact' },
+] as const;
+
 /** First-person section intros. */
 export const leads = {
   stack: 'The tools I reach for.',

@@ -5,7 +5,7 @@
 
 export type VoicePhase = 'idle' | 'connecting' | 'listening' | 'thinking' | 'speaking' | 'error';
 
-export type VoiceErrorKind = 'mic-denied' | 'unavailable' | 'network';
+export type VoiceErrorKind = 'mic-denied' | 'unavailable' | 'refused' | 'network';
 
 export interface VoiceState {
   phase: VoicePhase;
@@ -63,6 +63,7 @@ export function voiceReducer(state: VoiceState, event: VoiceEvent): VoiceState {
 export const ERROR_COPY: Record<VoiceErrorKind, string> = {
   'mic-denied': 'The microphone is blocked. Allow access in your browser settings and try again, or email me instead.',
   unavailable: 'The voice guide is not switched on right now. Email me and I will get back to you.',
+  refused: 'Basil could not reach ElevenLabs just now. Try again in a moment, or email me.',
   network: 'The connection dropped. Check your network and try again.',
 };
 

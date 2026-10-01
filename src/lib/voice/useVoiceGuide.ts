@@ -17,6 +17,8 @@ async function fetchSignedUrl(): Promise<string | VoiceErrorKind> {
   try {
     const res = await fetch('/api/voice/session', { cache: 'no-store' });
     if (res.status === 503) return 'unavailable';
+    // The server reached ElevenLabs but was turned away (bad key, missing permission, rate limit).
+    if (res.status === 502 || res.status === 429) return 'refused';
     if (!res.ok) return 'network';
     const data: unknown = await res.json();
     if (typeof data === 'object' && data !== null && 'signedUrl' in data && typeof data.signedUrl === 'string') {
@@ -58,6 +60,8 @@ export function useVoiceGuide(levelTarget: RefObject<HTMLElement | null>) {
       if (who === 'you') dispatch({ type: 'user-spoke' });
       setLines((prev) => [...prev, { id: lineId.current++, who, text: message }].slice(-MAX_LINES));
     },
+    // A tool the agent calls but the site does not know usually means a name mismatch in the dashboard.
+    onUnhandledClientToolCall: (call) => console.warn('[Basil] unhandled client tool call', call),
     clientTools: { highlight_section: ({ id }: { id?: unknown }) => (highlightEntry(id) ? 'highlighted' : 'not found') },
   });
   const { getInputVolume, getOutputVolume, startSession, endSession, setMuted } = conversation;
@@ -68,7 +72,7 @@ export function useVoiceGuide(levelTarget: RefObject<HTMLElement | null>) {
     setLines([]);
     // Check the server first so a missing config never triggers a microphone prompt.
     const signedUrl = await fetchSignedUrl();
-    if (signedUrl === 'unavailable' || signedUrl === 'network') return dispatch({ type: 'failed', error: signedUrl });
+    if (signedUrl === 'unavailable' || signedUrl === 'refused' || signedUrl === 'network') return dispatch({ type: 'failed', error: signedUrl });
     if (!(await micAllowed())) return dispatch({ type: 'failed', error: 'mic-denied' });
     startSession({ signedUrl, connectionType: 'websocket' });
   }, [startSession, state.phase]);
