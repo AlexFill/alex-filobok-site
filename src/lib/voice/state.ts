@@ -59,6 +59,20 @@ export function voiceReducer(state: VoiceState, event: VoiceEvent): VoiceState {
   }
 }
 
+/**
+ * Maps an SDK `onError` call to a failure, or `null` when the session keeps
+ * running. The SDK also reports client tool problems and cleanup hiccups
+ * through `onError`; those must not end the conversation on screen.
+ */
+export function classifySdkError(message: string, context: unknown): VoiceErrorKind | null {
+  const ctx = typeof context === 'object' && context !== null ? (context as Record<string, unknown>) : {};
+  if ('clientToolName' in ctx || 'toolCallId' in ctx) return null;
+  if (message.startsWith('Failed to end session')) return null;
+  // A server error event from ElevenLabs, such as quota or an agent misconfiguration.
+  if ('errorType' in ctx) return 'refused';
+  return 'network';
+}
+
 /** Plain-language messages, one per failure. Each says what to do next. */
 export const ERROR_COPY: Record<VoiceErrorKind, string> = {
   'mic-denied': 'The microphone is blocked. Allow access in your browser settings and try again, or email me instead.',

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { initialVoiceState, isLive, orbLabel, voiceReducer, type VoiceEvent, type VoiceState } from './state';
+import { classifySdkError, initialVoiceState, isLive, orbLabel, voiceReducer, type VoiceEvent, type VoiceState } from './state';
 
 const run = (events: VoiceEvent[], from: VoiceState = initialVoiceState) => events.reduce(voiceReducer, from);
 
@@ -74,5 +74,25 @@ describe('isLive and orbLabel', () => {
     for (const phase of ['idle', 'connecting', 'listening', 'thinking', 'speaking', 'error'] as const) {
       expect(orbLabel({ ...initialVoiceState, phase }).length).toBeGreaterThan(0);
     }
+  });
+});
+
+describe('classifySdkError', () => {
+  it('keeps the session alive for client tool problems', () => {
+    expect(classifySdkError('Client tool execution failed with following error: boom', { clientToolName: 'highlight_section' })).toBeNull();
+    expect(classifySdkError('Unexpected error in client tool call handling: boom', { clientToolName: 'x', toolCallId: '1' })).toBeNull();
+  });
+
+  it('ignores cleanup failures after the session ends', () => {
+    expect(classifySdkError('Failed to end session after agent end_call', new Error('closed'))).toBeNull();
+  });
+
+  it('treats server error events as refused', () => {
+    expect(classifySdkError('Server error: quota exceeded', { errorType: 'quota_exceeded', code: 1008 })).toBe('refused');
+  });
+
+  it('treats anything else as a dropped connection', () => {
+    expect(classifySdkError('Session failed to start', new Error('socket closed'))).toBe('network');
+    expect(classifySdkError('Something odd', undefined)).toBe('network');
   });
 });

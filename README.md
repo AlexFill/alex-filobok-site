@@ -1,6 +1,8 @@
 # alexfilobok.com
 
-The personal site of Alex Filobok, Software Engineer at Google. It opens with "Hi, I'm Alex" and tells nine
+[![CI](https://github.com/AlexFill/alex-filobok-site/actions/workflows/ci.yml/badge.svg)](https://github.com/AlexFill/alex-filobok-site/actions/workflows/ci.yml)
+
+The personal site of Alex Filobok, a full-stack engineer. It opens with "Hi, I'm Alex" and tells nine
 years of work as one first-person scroll: a device morphs from a phone to a laptop to a browser as the story
 moves from iOS to macOS to full stack.
 Basil, a voice guide built on ElevenLabs Agents, answers questions about the work out loud and scrolls to

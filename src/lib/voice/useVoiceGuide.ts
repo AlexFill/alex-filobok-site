@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useReducer, useRef, useState, type RefObject } from 'react';
 import { useConversation } from '@elevenlabs/react';
 import { highlightEntry } from './highlight';
-import { initialVoiceState, isLive, voiceReducer, type VoiceErrorKind } from './state';
+import { classifySdkError, initialVoiceState, isLive, voiceReducer, type VoiceErrorKind } from './state';
 
 export interface TranscriptLine {
   id: number;
@@ -53,7 +53,11 @@ export function useVoiceGuide(levelTarget: RefObject<HTMLElement | null>) {
   const conversation = useConversation({
     onConnect: () => dispatch({ type: 'connected' }),
     onDisconnect: () => dispatch({ type: 'disconnected' }),
-    onError: () => dispatch({ type: 'failed', error: 'network' }),
+    onError: (message, context) => {
+      const error = classifySdkError(message, context);
+      if (error) dispatch({ type: 'failed', error });
+      else console.warn('[Basil] non-fatal voice error', message);
+    },
     onModeChange: ({ mode }) => dispatch({ type: 'agent-mode', mode }),
     onMessage: ({ message, role }) => {
       const who: TranscriptLine['who'] = role === 'user' ? 'you' : 'guide';
